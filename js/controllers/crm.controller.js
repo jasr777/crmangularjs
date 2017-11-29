@@ -7,11 +7,20 @@
     /* @ngInject */
     function CRMController($scope) {
         $scope.usuarios = [];
-        $scope.nuevoUsuario ={}; /*{ nombre : '',
+        $scope.nuevoUsuario = { nombre : '',
                                 direccionFoto : '',
                                 telefono : '',
                                 descripcion :'',
-                                otros : '',};*/
+                                otros : '',
+                                curso : {
+                                    primaria : 'none',
+                                    secundaria : 'none',
+                                    bachillerato : 'none',
+                                    ciclograd : 'none',
+                                },
+
+                            };
+
 
         $scope.crearUsuario = crearUsuario;
         $scope.borrarUsuario = borrarUsuario;
@@ -35,10 +44,10 @@
                                 descripcion :'',
                                 otros : '',
                                 curso : {
-                                    primaria :'',
-                                    secundaria :'',
-                                    bachillerato:'',
-                                    ciclograd :'',
+                                    primaria :'none',
+                                    secundaria :'none',
+                                    bachillerato:'none',
+                                    ciclograd :'none',
 
                                 },
                             },
@@ -65,9 +74,8 @@
         function crearUsuario(usuario){
             usuario.id =randId();
         	$scope.usuarios.push(usuario);
-            console.log("Guardar el estado del formulario : ")           
+            console.log(usuario);
             saveState();
-            console.log("-- FIN SAVE STATE --");
             clean();
             if ($scope.flagModificar){
                 $scope.flagCrear = false;
@@ -114,7 +122,12 @@
                     $scope.nuevoUsuario.telefono= $scope.usuarios[i].telefono;
                     $scope.nuevoUsuario.descripcion=$scope.usuarios[i].descripcion;
                     $scope.nuevoUsuario.otros = $scope.usuarios[i].otros;
+
+                    
                     $scope.nuevoUsuario.curso.primaria=$scope.usuarios[i].curso.primaria;
+                    
+
+
                     $scope.nuevoUsuario.curso.secundaria = $scope.usuarios[i].curso.secundaria;
                     $scope.nuevoUsuario.curso.bachillerato =$scope.usuarios[i].curso.bachillerato;
                     $scope.nuevoUsuario.curso.ciclograd = $scope.usuarios[i].curso.ciclograd ;
@@ -166,12 +179,9 @@
             $scope.state.form.direccionFoto =$scope.nuevoUsuario.direccionFoto;
             $scope.state.form.telefono = $scope.nuevoUsuario.telefono;
             $scope.state.form.descripcion  = $scope.nuevoUsuario.descripcion;
-            $scope.state.form.otros  = $scope.nuevoUsuario.otros;
-            // Aqui falla
-
-
-            console.log($scope.state.form.primaria + " scope state form primaria ");
-            console.log($scope.nuevoUsuario.curso.primaria + "scope nuevousuario curso primaria");
+            $scope.state.form.otros  = $scope.nuevoUsuario.otros;                
+            console.log($scope.state.form.curso.primaria + " ==> en state ");
+            console.log($scope.nuevoUsuario.curso.primaria + " ===> en nuevoUsuario");
             $scope.state.form.curso.primaria = $scope.nuevoUsuario.curso.primaria;
             $scope.state.form.curso.secundaria = $scope.nuevoUsuario.curso.secundaria;
             $scope.state.form.curso.bachillerato = $scope.nuevoUsuario.curso.bachillerato;
