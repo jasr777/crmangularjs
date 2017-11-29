@@ -13,7 +13,7 @@
 <div class="topmenu">
 	<div class="container">
 		<div class="row">
-			<p class="col-md-2"> MI CRM MOLÓN</p>			
+			<p class="col-md-2"> MI CRM</p>			
 			<p class="col-md-offset-6 col-md-1" > BUSCAR</p>
 			<input class="col-md-3" type="text" ng-model="search.nombre"></div>
 			
@@ -31,6 +31,13 @@
 
 								<p>Nombre :{{usuario.nombre}}</p>
 								<p>Teléfono :{{usuario.telefono}}</p>
+								<p> Curso(s) :</p>
+								 <p ng-if ="usuario.curso.primaria">Primaria</p>
+								 <p ng-if ="usuario.curso.secundaria">Secundaria</p>
+								 <p ng-if ="usuario.curso.bachillerato">Bachillerato</p>
+								 <p ng-if ="usuario.curso.ciclograd">
+								 	Ciclo o grado
+								 </p>
 								<button class="btn btn-default" role="button" ng-click="actualizarFormularioUsuario(usuario.id)">Modificar</button>
 								<button class="btn btn-primary" role="button" ng-click="borrarUsuario(usuario.id)">Borrar</button>
 							</div>
@@ -61,6 +68,13 @@
 						<p> Otros...</p>
 						<input type="text" class="form-control" placeholder="Otros..." ng-model="nuevoUsuario.otros" ng-change="saveState()">
 					</div>
+					<div class=" form-group curso">
+						<p> Curso</p>
+						<input type="checkbox" class="radio-inline" ng-model ="nuevoUsuario.curso.primaria"  value="Primaria" ng-change="saveState()"> Primaria
+						<input type="checkbox" class="radio-inline" ng-model="nuevoUsuario.curso.secundaria" value="Secundaria" ng-change="saveState()"> Secundaria
+						<input type="checkbox" class="radio-inline" ng-model="nuevoUsuario.curso.bachillerato" value="Bachillerato" ng-change="saveState()">Bachillerato
+						<input type="checkbox" class="radio-inline" ng-model="nuevoUsuario.curso.ciclograd" value="Ciclo o Grado" ng-change="saveState()">Ciclo o Grado
+					</div>
 
 
 					<div class="botones">
@@ -70,6 +84,7 @@
 						<button class="btn btn-primary col-md-4" ng-click ="modificarUsuario(nuevoUsuario)" ng-show="flagModificar"> Modificar</button>
 						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>

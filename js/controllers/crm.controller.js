@@ -34,7 +34,13 @@
                                 telefono : '',
                                 descripcion :'',
                                 otros : '',
+                                curso : {
+                                    primaria :'',
+                                    secundaria :'',
+                                    bachillerato:'',
+                                    ciclograd :'',
 
+                                },
                             },
                         };
         
@@ -97,10 +103,7 @@
         }
 
 
-
         function actualizarFormularioUsuario(id){
-            $scope.mensajeBoton='Actualizar';
-
 
             for(var i = 0; i < $scope.usuarios.length; i ++){       
                 if(id == $scope.usuarios[i].id){
@@ -111,6 +114,11 @@
                     $scope.nuevoUsuario.telefono= $scope.usuarios[i].telefono;
                     $scope.nuevoUsuario.descripcion=$scope.usuarios[i].descripcion;
                     $scope.nuevoUsuario.otros = $scope.usuarios[i].otros;
+                    $scope.nuevoUsuario.curso.primaria=$scope.usuarios[i].curso.primaria;
+                    $scope.nuevoUsuario.curso.secundaria = $scope.usuarios[i].curso.secundaria;
+                    $scope.nuevoUsuario.curso.bachillerato =$scope.usuarios[i].curso.bachillerato;
+                    $scope.nuevoUsuario.curso.ciclograd = $scope.usuarios[i].curso.ciclograd ;
+
 
                 }
         }
@@ -127,6 +135,11 @@
                     $scope.usuarios[i].telefono = usuario.telefono;
                     $scope.usuarios[i].descripcion = usuario.descripcion;
                     $scope.usuarios[i].otros = usuario.otros;
+                    $scope.usuarios[i].curso.primaria = usuario.primaria;
+                    $scope.usuarios[i].curso.secundaria = usuario.secundaria;
+                    $scope.usuarios[i].curso.bachillerato = usuario.bachillerato;
+                    $scope.usuarios[i].curso.ciclograd  = usuario.ciclograd;
+
                     saveState();
                    
                 }
@@ -153,7 +166,20 @@
             $scope.state.form.direccionFoto =$scope.nuevoUsuario.direccionFoto;
             $scope.state.form.telefono = $scope.nuevoUsuario.telefono;
             $scope.state.form.descripcion  = $scope.nuevoUsuario.descripcion;
-            $scope.state.form.otros  = $scope.nuevoUsuario.otros;            
+            $scope.state.form.otros  = $scope.nuevoUsuario.otros;
+            // Aqui falla
+
+
+            console.log($scope.state.form.primaria + " scope state form primaria ");
+            console.log($scope.nuevoUsuario.curso.primaria + "scope nuevousuario curso primaria");
+            $scope.state.form.curso.primaria = $scope.nuevoUsuario.curso.primaria;
+            $scope.state.form.curso.secundaria = $scope.nuevoUsuario.curso.secundaria;
+            $scope.state.form.curso.bachillerato = $scope.nuevoUsuario.curso.bachillerato;
+            $scope.state.form.curso.ciclograd = $scope.nuevoUsuario.curso.ciclograd;
+
+
+
+
             localStorage.setItem('state', JSON.stringify($scope.state));
         }
 
@@ -169,6 +195,11 @@
             $scope.nuevoUsuario.telefono =$scope.state.form.telefono;
             $scope.nuevoUsuario.descripcion =$scope.state.form.descripcion;
             $scope.nuevoUsuario.otros =$scope.state.form.otros;
+            $scope.nuevoUsuario.curso.primaria=$scope.state.form.curso.primaria;
+           $scope.nuevoUsuario.curso.secundaria = $scope.state.form.curso.secundaria;
+            $scope.nuevoUsuario.curso.bachillerato =$scope.state.form.curso.bachillerato;
+            $scope.nuevoUsuario.curso.ciclograd = $scope.state.form.curso.ciclograd ;
+
 
 
           }
