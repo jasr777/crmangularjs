@@ -1,0 +1,37 @@
+.topmenu{
+	background-color:#9cb8e5;
+	color:#fff;
+	font-size: 1.4em;
+	border-bottom: 1px solid #000;
+
+}
+
+
+.userlist{
+	background-color:#f7f296;
+}
+
+.userdata{
+	background-color:#9dafea;
+	color:#000;
+	border-left:1px solid #000;
+	border-right:1px solid #000;
+	border-bottom:1px solid #000;
+
+
+	
+}
+
+
+button{
+	color:#000;
+	margin :20px;
+
+}
+
+input[type=text]{
+	color:#000;
+}
+textarea{
+	resize :none;
+}

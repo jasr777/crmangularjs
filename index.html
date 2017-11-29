@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html ng-app='CRM' lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<link rel="stylesheet" href="https://code.angularjs.org/1.6.6/angular-csp.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body ng-controller='CRMController'>
+
+<div class="topmenu">
+	<div class="container">
+		<div class="row">
+			<p class="col-md-2"> MI CRM MOLÓN</p>			
+			<p class="col-md-offset-6 col-md-1" > BUSCAR</p>
+			<input class="col-md-3" type="text" ng-model="search.nombre"></div>
+			
+			
+	</div>
+</div>
+
+	<div class="container userlist">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="row">
+						<div class="thumbnail col-md-4" ng-repeat="usuario in usuarios |filter:search track by usuario.id">
+							<img ng-src="{{usuario.direccionFoto}}" src="https://s3.amazonaws.com/FringeBucket/default-user.png" alt="" class="img-rounded">
+							<div class="caption">
+
+								<p>Nombre :{{usuario.nombre}}</p>
+								<p>Teléfono :{{usuario.telefono}}</p>
+								<button class="btn btn-default" role="button" ng-click="actualizarFormularioUsuario(usuario.id)">Modificar</button>
+								<button class="btn btn-primary" role="button" ng-click="borrarUsuario(usuario.id)">Borrar</button>
+							</div>
+						</div>
+					</div>
+				</div>		
+				<div class="userdata col-md-4">
+						<div class="form-group nombre">
+						<p > Nombre</p>
+						<input type="text" class="form-control" placeholder="Nombre" ng-model="nuevoUsuario.nombre" ng-change="saveState()">
+
+					</div>
+
+					<div class="form-group foto">
+						<p>Url Foto</p>
+						<input type="text" class="form-control" placeholder="URL de la foto" ng-model="nuevoUsuario.direccionFoto" ng-change="saveState()">
+					</div>
+					<div class="form-group telefono">
+						<p> Tlf.</p>
+						<input type="text" class="form-control" placeholder="Numero de teléfono" ng-model="nuevoUsuario.telefono" ng-change="saveState()">
+					</div>
+					<div class="form-group descripcion">
+						<p> Descripción</p>
+						<textarea class="form-control" rows="3"  placeholder="Introduzca una descripcion breve" ng-model="nuevoUsuario.descripcion" ng-change="saveState()"></textarea>
+					</div>
+
+					<div class="form-group otros">
+						<p> Otros...</p>
+						<input type="text" class="form-control" placeholder="Otros..." ng-model="nuevoUsuario.otros" ng-change="saveState()">
+					</div>
+
+
+					<div class="botones">
+						<div class="row">
+						<button class="btn btn-default col-md-4" ng-click="clean()">Cancelar</button>
+						<button class="btn btn-primary col-md-offset-2 col-md-4" ng-click="crearUsuario(nuevoUsuario)" ng-show="flagCrear">Crear</button>
+						<button class="btn btn-primary col-md-4" ng-click ="modificarUsuario(nuevoUsuario)" ng-show="flagModificar"> Modificar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+<!-- Angular ---->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script> 
+
+
+<!-- Moulos -->
+
+<script src="js/app.js"></script>
+<script src="js/controllers/crm.controller.js"></script>
+	
+</body>
+</html>
