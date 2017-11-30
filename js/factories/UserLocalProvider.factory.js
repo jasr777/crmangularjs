@@ -1,3 +1,6 @@
+/*
+
+
 (function() {
     'use strict';
     angular
@@ -6,7 +9,7 @@
     
     UserLocalProvider.$inject = [];
     /* @ngInject */
-    
+    /*
     function UserLocalProvider() {
         var service = {
 
@@ -104,7 +107,7 @@
                             },
                         };
         */
-
+/*
         }
     }
-})();
+})();*/
