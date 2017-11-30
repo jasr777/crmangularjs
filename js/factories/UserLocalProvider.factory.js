@@ -1,6 +1,3 @@
-/*
-
-
 (function() {
     'use strict';
     angular
@@ -9,7 +6,7 @@
     
     UserLocalProvider.$inject = [];
     /* @ngInject */
-    /*
+    
     function UserLocalProvider() {
         var service = {
 
@@ -17,6 +14,11 @@
         	getAllUsuarios : getAllUsuarios,
             addUsuario :  addUsuario,
             removeUsuario : removeUsuario,
+
+            //TODO: 
+
+            updateUsuario : updateUsuario,
+
         };
         return service;
         ////////////////
@@ -58,14 +60,45 @@
                 }
 
             }
-        // todo           cache.usuarios = 
+             cache.usuarios = usuarios.splice(0);
+             console.log("cache:");
+             console.log(cache);
 
+             localStorage.setItem('state',JSON.stringify(cache));
 
+        }
+        // Esto explota :
+        function updateUsuario(usuario){
 
+            console.log("UPDATE USUARIO");
+            var usuarios = getAllUsuarios();
+
+            var cache = JSON.parse(localStorage.getItem('state'));
+            console.log("cache updateUsuario");
+            console.log(cache);
+
+            for ( var i = 0; i < usuarios.length ; i++){
+                if (usuarios[i].id == usuario.id){
+                    console.log("usuarios");
+                    console.log(usuarios);
+                    console.log("usuario");
+                    console.log(usuario);
+
+                    usuarios[i] =usuario;
+                    console.log("usuarios tras actualizar");
+                    console.log(usuarios);
+                }
+            }
+
+            localStorage.setItem('state', JSON.stringify(usuarios));
 
         }
 
 
+
+        }
+   
+})();
 
           	/*
             usuarios.push(usuario);
@@ -73,7 +106,7 @@
 */
 
 
-            /*  $scope.state.usuarios = $scope.usuarios.slice(0);
+            /* $scope.state.usuarios = $scope.usuarios.slice(0);
             $scope.state.form.id = $scope.nuevoUsuario.id;
             $scope.state.form.nombre = $scope.nuevoUsuario.nombre;
             $scope.state.form.direccionFoto =$scope.nuevoUsuario.direccionFoto;
@@ -107,7 +140,3 @@
                             },
                         };
         */
-/*
-        }
-    }
-})();*/

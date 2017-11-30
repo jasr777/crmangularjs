@@ -5,12 +5,12 @@
         .controller('CRMController', CRMController);
 
 
-        CRMController.$inject = ['$scope'];
+        CRMController.$inject = ['$scope', 'UserLocalProvider'];
 
    
     /* @ngInject */ 
 
-    function CRMController($scope) {
+    function CRMController($scope, UserLocalProvider) {
         $scope.usuarios = [];
         $scope.nuevoUsuario = { nombre : '',
                                 direccionFoto : '',
@@ -66,33 +66,23 @@
         ////////////////
 
 
-        function activate() {            
+        function activate() {    
 
-            if ( 'state' in localStorage){
-                loadState();
 
-                
-
-            } else {
-                alert("No existen usuarios, cree uno usando el formulario de la derecha")
-                $scope.usuarios = [];
-
-                //$scope.usuarios = UserLocalProvider.getAllUsuarios();
-
-            }
+        $scope.usuarios = UserLocalProvider.getAllUsuarios();
+         
         }
-
 
         function crearUsuario(usuario){
             usuario.id =randId();
 
 
-           	$scope.usuarios.push(usuario);
+           	//$scope.usuarios.push(usuario);
 
-            //UserLocalProvider.addUsuario(usuario);
-            //$scope.usuarios = UserLocalProvider.getAllUsuarios();
+            UserLocalProvider.addUsuario(usuario);
+            $scope.usuarios = UserLocalProvider.getAllUsuarios();
             console.log(usuario);
-            saveState();
+           // saveState();
            
             if ($scope.flagModificar){
                 $scope.flagCrear = false;
@@ -104,18 +94,32 @@
         }
 
 
-        // Borrar Usuario por id 
+        // Borrar Usuario   
 
         function borrarUsuario(id){
-            console.log(id);
-
             for (var i = 0; i < $scope.usuarios.length;i++){
-                console.log("--for--");
                 if (id == $scope.usuarios[i].id){
+                     var checkUsername = prompt ("¿Está seguro de querer borrar el usuario? Para confirmar introduzca el nombre del usuario");
+                     console.log(checkUsername);
+                     console.log($scope.usuarios[i].nombre);
+                     if (checkUsername == $scope.usuarios[i].nombre){
+                        UserLocalProvider.removeUsuario(id);
+                        $scope.usuarios= UserLocalProvider.getAllUsuarios();
+
+                    }
+                }
+            }
+
+/*
+           for (var i = 0; i < $scope.usuarios.length;i++){
+              //  console.log("--for--");
+               if (id == $scope.usuarios[i].id){
                     var checkUsername = prompt ("¿Está seguro de querer borrar el usuario? Para confirmar introduzca el nombre del usuario");
                     if (checkUsername == $scope.usuarios[i].nombre){
-                       $scope.usuarios.splice(i,1);
-                       saveState();
+
+                        UserLocalProvider.removeUsuario(id);
+                      // $scope.usuarios.splice(i,1);
+                       //saveState();
                     } else {
                         alert("El nombre del usuario introducido no es correcto, no se eliminará el usuario");
                     }
@@ -125,7 +129,7 @@
                 }
             }
 
-            
+  */          
         }
 
 
@@ -152,8 +156,14 @@
     }
 
         function modificarUsuario( usuario ){
-            for (var i = 0; i < $scope.usuarios.length;i++){
-                if (usuario.id == $scope.usuarios[i].id){
+
+                    UserLocalProvider.updateUsuario(usuario);
+                    $scope.usuarios = UserLocalProvider.getAllUsuarios();
+
+                    $scope.flagModificar =false;
+                    $scope.flagCrear = true;
+                    clean();
+                    /*
                     $scope.usuarios[i].nombre = usuario.nombre;
                     $scope.usuarios[i].edad = usuario.edad;
                     $scope.usuarips[i].correo = usuario.correo;
@@ -166,15 +176,12 @@
                     $scope.usuarios[i].bachillerato = usuario.bachillerato;
                     $scope.usuarios[i].ciclograd  = usuario.ciclograd;
 
-                    saveState();
+                    saveState();*/
                    
                 }
-            }
-            $scope.flagModificar =false;
-            $scope.flagCrear = true;
-            clean();
+          
 
-        }
+        
 
         function clean(){
             $scope.nuevoUsuario = {};
@@ -187,7 +194,7 @@
 
         function saveState(){
 
-            $scope.state.usuarios = $scope.usuarios.slice(0);
+            $scope.state.usuarios = $scope.usuarios;
             $scope.state.form.id = $scope.nuevoUsuario.id;
             $scope.state.form.nombre = $scope.nuevoUsuario.nombre;
             $scope.state.form.edad = $scope.nuevoUsuario.edad;
