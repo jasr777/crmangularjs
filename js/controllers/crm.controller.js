@@ -123,6 +123,8 @@
                     $scope.nuevoUsuario.descripcion=$scope.usuarios[i].descripcion;
                     $scope.nuevoUsuario.otros = $scope.usuarios[i].otros;
 
+
+
                     
                     $scope.nuevoUsuario.curso.primaria=$scope.usuarios[i].curso.primaria;
                     
@@ -179,7 +181,8 @@
             $scope.state.form.direccionFoto =$scope.nuevoUsuario.direccionFoto;
             $scope.state.form.telefono = $scope.nuevoUsuario.telefono;
             $scope.state.form.descripcion  = $scope.nuevoUsuario.descripcion;
-            $scope.state.form.otros  = $scope.nuevoUsuario.otros;                
+            $scope.state.form.otros  = $scope.nuevoUsuario.otros; 
+            // Error => no se puede leer undefined               
             console.log($scope.state.form.curso.primaria + " ==> en state ");
             console.log($scope.nuevoUsuario.curso.primaria + " ===> en nuevoUsuario");
             $scope.state.form.curso.primaria = $scope.nuevoUsuario.curso.primaria;
@@ -206,7 +209,7 @@
             $scope.nuevoUsuario.descripcion =$scope.state.form.descripcion;
             $scope.nuevoUsuario.otros =$scope.state.form.otros;
             $scope.nuevoUsuario.curso.primaria=$scope.state.form.curso.primaria;
-           $scope.nuevoUsuario.curso.secundaria = $scope.state.form.curso.secundaria;
+              $scope.nuevoUsuario.curso.secundaria = $scope.state.form.curso.secundaria;
             $scope.nuevoUsuario.curso.bachillerato =$scope.state.form.curso.bachillerato;
             $scope.nuevoUsuario.curso.ciclograd = $scope.state.form.curso.ciclograd ;
 
