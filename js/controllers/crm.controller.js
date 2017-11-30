@@ -34,9 +34,9 @@
         $scope.cursos = ['primaria','secundaria', 'bachillerato', 'Ciclo o Grado'];
         // Variables relativas a localStorage 
        // $scope.state = {};
-        
+        $scope.search ='';
         /* La forma de state es : */
-        $scope.state = {    usuarios : [],
+        $scope.state = {    usuarios : [],                            
                             form : {    
                                 id : '',                         
                                 nombre : '',
@@ -51,6 +51,8 @@
                                 ciclograd :false,
 
                                 },
+                            // 
+                            filter : '',
                             };
         
        
@@ -203,6 +205,7 @@
             $scope.state.form.secundaria = $scope.nuevoUsuario.secundaria;
             $scope.state.form.bachillerato = $scope.nuevoUsuario.bachillerato;
             $scope.state.form.ciclograd = $scope.nuevoUsuario.ciclograd;
+            $scope.state.filter = $scope.search;
 
             console.log($scope.state);
 
@@ -227,6 +230,9 @@
             $scope.nuevoUsuario.secundaria = $scope.state.form.secundaria;
             $scope.nuevoUsuario.bachillerato =$scope.state.form.bachillerato;
             $scope.nuevoUsuario.ciclograd = $scope.state.form.ciclograd ;
+            console.log($scope.state.search)
+            $scope.search = $scope.state.filter;
+
           }
 
         // Generador de numeros aleatorios para ID de usuarios 
