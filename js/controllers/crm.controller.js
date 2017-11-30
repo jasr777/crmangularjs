@@ -3,25 +3,28 @@
     angular
         .module('CRM')
         .controller('CRMController', CRMController);
-    CRMController.$inject = ['$scope'];
-    /* @ngInject */
-    function CRMController($scope) {
+
+
+        CRMController.$inject = ['$scope' , 'UserLocalProvider'];
+
+   
+    /* @ngInject */ 
+
+    function CRMController($scope, UserLocalProvider) {
         $scope.usuarios = [];
         $scope.nuevoUsuario = { nombre : '',
                                 direccionFoto : '',
                                 telefono : '',
                                 descripcion :'',
                                 otros : '',
-                                curso : {
-                                    primaria : 'none',
-                                    secundaria : 'none',
-                                    bachillerato : 'none',
-                                    ciclograd : 'none',
-                                },
+                                primaria : '',
+                                secundaria :'',
+                                bachillerato : '',
+                                ciclograd : '',
+                                };
+        $scope.cursos = {
 
-                            };
-
-
+        }
         $scope.crearUsuario = crearUsuario;
         $scope.borrarUsuario = borrarUsuario;
         $scope.clean = clean;
@@ -44,10 +47,10 @@
                                 descripcion :'',
                                 otros : '',
                                 curso : {
-                                    primaria :'none',
-                                    secundaria :'none',
-                                    bachillerato:'none',
-                                    ciclograd :'none',
+                                    primaria :false,
+                                    secundaria :false,
+                                    bachillerato:false,
+                                    ciclograd :false,
 
                                 },
                             },
@@ -62,10 +65,12 @@
 
 
         function activate() {            
-            if (localStorage.getItem('state') == null){
+            if (UserLocalProvider.getAllUsuarios().length == 0){
                 alert("No existen usuarios, cree uno usando el formulario de la derecha")
-               
+
             } else {
+                $scope.usuarios = UserLocalProvider.getAllUsuarios();
+
                 loadState();
             }
         }
@@ -73,15 +78,21 @@
 
         function crearUsuario(usuario){
             usuario.id =randId();
-        	$scope.usuarios.push(usuario);
-            console.log(usuario);
-            saveState();
-            clean();
+
+
+    //        	$scope.usuarios.push(usuario);
+
+            UserLocalProvider.addUsuario(usuario);
+            $scope.usuarios = UserLocalProvider.getAllUsuarios();
+          //  console.log(usuario);
+          //  saveState();
+           
             if ($scope.flagModificar){
                 $scope.flagCrear = false;
             } else {
                 $scope.flagCrear = true;
             }
+             clean();
 
         }
 
@@ -112,28 +123,18 @@
 
 
         function actualizarFormularioUsuario(id){
-
             for(var i = 0; i < $scope.usuarios.length; i ++){       
-                if(id == $scope.usuarios[i].id){
-            
+                if(id == $scope.usuarios[i].id){            
                     $scope.nuevoUsuario.id = $scope.usuarios[i].id;
                     $scope.nuevoUsuario.nombre = $scope.usuarios[i].nombre 
                     $scope.nuevoUsuario.direccionFoto =$scope.usuarios[i].direccionFoto;
                     $scope.nuevoUsuario.telefono= $scope.usuarios[i].telefono;
                     $scope.nuevoUsuario.descripcion=$scope.usuarios[i].descripcion;
-                    $scope.nuevoUsuario.otros = $scope.usuarios[i].otros;
-
-
-
-                    
-                    $scope.nuevoUsuario.curso.primaria=$scope.usuarios[i].curso.primaria;
-                    
-
-
-                    $scope.nuevoUsuario.curso.secundaria = $scope.usuarios[i].curso.secundaria;
-                    $scope.nuevoUsuario.curso.bachillerato =$scope.usuarios[i].curso.bachillerato;
-                    $scope.nuevoUsuario.curso.ciclograd = $scope.usuarios[i].curso.ciclograd ;
-
+                    $scope.nuevoUsuario.otros = $scope.usuarios[i].otros;                    
+                    $scope.nuevoUsuario.primaria=$scope.usuarios[i].primaria;
+                    $scope.nuevoUsuario.secundaria = $scope.usuarios[i].secundaria;
+                    $scope.nuevoUsuario.bachillerato =$scope.usuarios[i].bachillerato;
+                    $scope.nuevoUsuario.ciclograd = $scope.usuarios[i].ciclograd ;
 
                 }
         }
@@ -144,16 +145,15 @@
         function modificarUsuario( usuario ){
             for (var i = 0; i < $scope.usuarios.length;i++){
                 if (usuario.id == $scope.usuarios[i].id){
-                    console.log("ESTOY AQUI");
                     $scope.usuarios[i].nombre = usuario.nombre;
                     $scope.usuarios[i].direccionFoto = usuario.direccionFoto;
                     $scope.usuarios[i].telefono = usuario.telefono;
                     $scope.usuarios[i].descripcion = usuario.descripcion;
                     $scope.usuarios[i].otros = usuario.otros;
-                    $scope.usuarios[i].curso.primaria = usuario.primaria;
-                    $scope.usuarios[i].curso.secundaria = usuario.secundaria;
-                    $scope.usuarios[i].curso.bachillerato = usuario.bachillerato;
-                    $scope.usuarios[i].curso.ciclograd  = usuario.ciclograd;
+                    $scope.usuarios[i].primaria = usuario.primaria;
+                    $scope.usuarios[i].secundaria = usuario.secundaria;
+                    $scope.usuarios[i].bachillerato = usuario.bachillerato;
+                    $scope.usuarios[i].ciclograd  = usuario.ciclograd;
 
                     saveState();
                    
@@ -166,7 +166,17 @@
         }
 
         function clean(){
-            $scope.nuevoUsuario = {};
+            $scope.nuevoUsuario = { nombre : '',
+                                    direccionFoto : '',
+                                    telefono : '',
+                                    descripcion :'',
+                                    otros : '',
+                                    primaria : '',
+                                    secundaria :'',
+                                    bachillerato : '',
+                                    ciclograd : '',
+                            };
+            
             saveState();
         }
 
@@ -182,13 +192,11 @@
             $scope.state.form.telefono = $scope.nuevoUsuario.telefono;
             $scope.state.form.descripcion  = $scope.nuevoUsuario.descripcion;
             $scope.state.form.otros  = $scope.nuevoUsuario.otros; 
-            // Error => no se puede leer undefined               
-            console.log($scope.state.form.curso.primaria + " ==> en state ");
-            console.log($scope.nuevoUsuario.curso.primaria + " ===> en nuevoUsuario");
-            $scope.state.form.curso.primaria = $scope.nuevoUsuario.curso.primaria;
-            $scope.state.form.curso.secundaria = $scope.nuevoUsuario.curso.secundaria;
-            $scope.state.form.curso.bachillerato = $scope.nuevoUsuario.curso.bachillerato;
-            $scope.state.form.curso.ciclograd = $scope.nuevoUsuario.curso.ciclograd;
+            $scope.state.form.otros  = $scope.nuevoUsuario.otros;                
+            $scope.state.form.curso.primaria = $scope.nuevoUsuario.primaria;
+            $scope.state.form.curso.secundaria = $scope.nuevoUsuario.secundaria;
+            $scope.state.form.curso.bachillerato = $scope.nuevoUsuario.bachillerato;
+            $scope.state.form.curso.ciclograd = $scope.nuevoUsuario.ciclograd;
 
 
 
@@ -208,10 +216,10 @@
             $scope.nuevoUsuario.telefono =$scope.state.form.telefono;
             $scope.nuevoUsuario.descripcion =$scope.state.form.descripcion;
             $scope.nuevoUsuario.otros =$scope.state.form.otros;
-            $scope.nuevoUsuario.curso.primaria=$scope.state.form.curso.primaria;
-              $scope.nuevoUsuario.curso.secundaria = $scope.state.form.curso.secundaria;
-            $scope.nuevoUsuario.curso.bachillerato =$scope.state.form.curso.bachillerato;
-            $scope.nuevoUsuario.curso.ciclograd = $scope.state.form.curso.ciclograd ;
+            $scope.nuevoUsuario.primaria=$scope.state.form.curso.primaria;
+            $scope.nuevoUsuario.secundaria = $scope.state.form.curso.secundaria;
+            $scope.nuevoUsuario.bachillerato =$scope.state.form.curso.bachillerato;
+            $scope.nuevoUsuario.ciclograd = $scope.state.form.curso.ciclograd ;
 
 
 
