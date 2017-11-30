@@ -17,9 +17,39 @@
 	border-left:1px solid #000;
 	border-right:1px solid #000;
 	border-bottom:1px solid #000;
+	height: 100%;
 
 
 	
+}
+/*
+.ng-invalid.ng-touched{
+	border : 3px solid red;
+}
+
+.ng-valid.ng-touched{
+	border : 3px solid green;
+}
+
+.ng-untouched{
+	border : 3px solid blue;
+}
+
+*/
+
+.ng-invalid.ng-touched{
+	border: 3px solid red;
+}
+
+.ng-valid.ng-touched{
+	border :3px solid green;
+}
+.ng-touched{
+	border : 3px solid #f7f296;
+}
+
+.ng-untouched{
+	border:3px solid blue;
 }
 
 
@@ -28,10 +58,10 @@ button{
 	margin :20px;
 
 }
-
-input[type=text]{
-	color:#000;
-}
 textarea{
 	resize :none;
+}
+
+input.ng-pristine{
+	border: 1px solid #green;
 }

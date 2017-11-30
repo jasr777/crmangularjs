@@ -60,32 +60,40 @@
 					<form  name="formUsuario" novalidate>
 						<div class="form-group nombre">
 							<label > Nombre</label>
-							<input ng-required="true" type="text" class="form-control" placeholder="Nombre" ng-model="nuevoUsuario.nombre" ng-change="saveState()">
+							<input name="usuario" ng-required="true" type="text" class="form-control" placeholder="Nombre" ng-model="nuevoUsuario.nombre" ng-change="saveState()">
+							<small ng-show ="formUsuario.usuario.$touched && formUsuario.usuario.$invalid">Por favor introduce el nombre del usuario</small>
 
+						</div>
+						<div class="form-group">
+							<label for="">Edad </label>
+							<input name ="edad" ng-min="18" ng-max="100" ng-required="true" type="number" ng-model="nuevoUsuario.edad">
+							<small ng-show="formUsuario.edad.$touched && formUsuario.edad.$invalid"> La edad para el registro debe estar entre 18 y 100</small>
 						</div>
 
 						<div class="form-group">
 							<label for="">Correo</label>
-							<input class="form-control" type="email" ng-model="nuevoUsuario.correo" placeholder="Correo">
-							
+							<input ng-required="true" name="correo"  class="form-control" type="email" ng-model="nuevoUsuario.correo" placeholder="Correo">
+							<small ng-show ="formUsuario.correo.$touched && formUsuario.correo.$invalid">Por favor introduce una dirección de correo válida </small>
 						</div>
 
 						<div class="form-group foto">
 							<label>Url Foto</label>
-							<input type="text" class="form-control" placeholder="URL de la foto" ng-model="nuevoUsuario.direccionFoto" ng-change="saveState()">
+							<input name="foto" type="text" class="form-control" placeholder="URL de la foto" ng-model="nuevoUsuario.direccionFoto" ng-change="saveState()">
 						</div>
 						<div class="form-group telefono">
 							<label> Tlf.</label>
-							<input type="text" class="form-control" placeholder="Numero de teléfono" ng-model="nuevoUsuario.telefono" ng-change="saveState()">
+							<input  ng-minlength="9" ng-required="true" name="telefono" type="text" class="form-control" placeholder="Numero de teléfono" ng-model="nuevoUsuario.telefono" ng-change="saveState()">
+							<small ng-show ="formUsuario.telefono.$touched && formUsuario.telefono.$invalid">Por favor introduce un número de teléfono válido </small>
+
 						</div>
 						<div class="form-group descripcion">
 							<label> Descripción</label>
-							<textarea class="form-control" rows="3"  placeholder="Introduzca una descripcion breve" ng-model="nuevoUsuario.descripcion" ng-change="saveState()"></textarea>
+							<textarea name="descripcion" class="form-control" rows="3"  placeholder="Introduzca una descripcion breve" ng-model="nuevoUsuario.descripcion" ng-change="saveState()"></textarea>
 						</div>
 
 						<div class="form-group otros">
 							<label> Otros...</label>
-							<input type="text" class="form-control" placeholder="Otros..." ng-model="nuevoUsuario.otros" ng-change="saveState()">
+							<input name="otros" type="text" class="form-control" placeholder="Otros..." ng-model="nuevoUsuario.otros" ng-change="saveState()">
 						</div>
 						<div class=" form-group curso">
 							<label> Curso</label>
@@ -99,7 +107,7 @@
 						<div class="botones">
 							<div class="row">
 							<button class="btn btn-default col-md-4" ng-click="clean()">Cancelar</button>
-							<button class="btn btn-primary col-md-offset-2 col-md-4" ng-click="crearUsuario(nuevoUsuario)" ng-show="flagCrear">Crear</button>
+							<button class="btn btn-primary col-md-offset-2 col-md-4" ng-click="crearUsuario(nuevoUsuario)" ng-disabled="!formUsuario.$valid" ng-show="flagCrear">Crear</button>
 							<button class="btn btn-primary col-md-4" ng-click ="modificarUsuario(nuevoUsuario)" ng-show="flagModificar"> Modificar</button>
 						</div>
 					</div>

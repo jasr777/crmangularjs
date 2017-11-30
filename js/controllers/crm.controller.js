@@ -15,6 +15,7 @@
         $scope.nuevoUsuario = { nombre : '',
                                 direccionFoto : '',
                                 telefono : '',
+                                edad : '',
                                 correo: '',
                                 descripcion :'',
                                 otros : '',
@@ -35,10 +36,12 @@
         // Variables relativas a localStorage 
        // $scope.state = {};
         $scope.search ='';
+
         /* La forma de state es : */
         $scope.state = {    usuarios : [],                            
                             form : {    
                                 id : '',                         
+                                edad : '',
                                 nombre : '',
                                 direccionFoto : '',
                                 correo:'',
@@ -131,6 +134,7 @@
                 if(id == $scope.usuarios[i].id){            
                     $scope.nuevoUsuario.id = $scope.usuarios[i].id;
                     $scope.nuevoUsuario.nombre = $scope.usuarios[i].nombre;
+                    $scope.nuevoUsuario.edad =$scope.usuarios[i].edad;
                     $scope.nuevoUsuario.correo = $scope.usuarios[i].correo;
                     $scope.nuevoUsuario.direccionFoto =$scope.usuarios[i].direccionFoto;
                     $scope.nuevoUsuario.telefono= $scope.usuarios[i].telefono;
@@ -151,6 +155,7 @@
             for (var i = 0; i < $scope.usuarios.length;i++){
                 if (usuario.id == $scope.usuarios[i].id){
                     $scope.usuarios[i].nombre = usuario.nombre;
+                    $scope.usuarios[i].edad = usuario.edad;
                     $scope.usuarips[i].correo = usuario.correo;
                     $scope.usuarios[i].direccionFoto = usuario.direccionFoto;
                     $scope.usuarios[i].telefono = usuario.telefono;
@@ -172,18 +177,8 @@
         }
 
         function clean(){
-            $scope.nuevoUsuario = { nombre : '',
-                                    correo : '',
-                                    direccionFoto : '',
-                                    telefono : '',
-                                    descripcion :'',
-                                    otros : '',
-                                    primaria : '',
-                                    secundaria :'',
-                                    bachillerato : '',
-                                    ciclograd : '',
-                            };
-            
+            $scope.nuevoUsuario = {};
+           $scope.formUsuario.$setUntouched();
             saveState();
         }
 
@@ -195,6 +190,7 @@
             $scope.state.usuarios = $scope.usuarios.slice(0);
             $scope.state.form.id = $scope.nuevoUsuario.id;
             $scope.state.form.nombre = $scope.nuevoUsuario.nombre;
+            $scope.state.form.edad = $scope.nuevoUsuario.edad;
             $scope.state.form.correo = $scope.nuevoUsuario.correo;
             $scope.state.form.direccionFoto =$scope.nuevoUsuario.direccionFoto;
             $scope.state.form.telefono = $scope.nuevoUsuario.telefono;
@@ -221,6 +217,7 @@
             $scope.usuarios = $scope.state.usuarios;
             $scope.nuevoUsuario.id = $scope.state.form.id;
             $scope.nuevoUsuario.nombre =$scope.state.form.nombre;
+            $scope.nuevoUsuario.edad = $scope.state.form.edad;
             $scope.nuevoUsuario.correo = $scope.state.form.correo;
             $scope.nuevoUsuario.direccionFoto =$scope.state.form.direccionFoto;
             $scope.nuevoUsuario.telefono =$scope.state.form.telefono;
